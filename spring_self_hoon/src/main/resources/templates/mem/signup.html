@@ -1,0 +1,76 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+	<title>멤버 회원가입</title>
+	<script src="/public/js/mem/signup.js" defer="defer"></script>
+	<link type="text/css" rel="stylesheet" href="/public/css/mem/signup.css">
+</head>
+
+<body>
+	<header th:insert="header_nav.html"></header>
+	<h1>회원가입 페이지</h1>
+	<main class="signup-main d-flex justify-content-center align-items-center" >
+		<form name="signup" class="signup-form" action="/mem/signup" method="post">
+			<div class="signup-el">
+				<label for="inputId">아이디:</label>
+				<input id="inputId" type="text" name="id" value="" placeholder="아이디 입력">
+			</div>
+			<span id="checkId">중복체크중입니다.</span>
+			<div class="signup-el">
+				<label for="inputEmail">이메일:</label>
+				<input id="inputEmail" type="text" name="email" value="hong@gmail.com">
+			</div>
+			<span id="checkEmail">중복체크중입니다.</span>
+			<div class="signup-el">
+				<label for="inputPhone">폰:</label>
+				<input id="inputPhone" type="text" name="phone" value="011-1111-1234">
+			</div>
+			<span id="checkPhone">중복체크중입니다.</span>
+			<div class="signup-el">
+				<label for="inputPw">pw:</label>
+				<input id="inputPw" type="text" name="pw" value="1234">
+			</div>
+			<span id="checkPw">길이가 4이상</span>
+			<div class="signup-el">
+				<label for="inputPwCheck">pw:</label>
+				<input id="inputPwCheck" type="text" name="pw_check" value="">
+			</div>
+			<span id="checkPwCheck">중복체크중입니다.</span>
+			<div class="signup-el">
+				<label for="inputName">이름:</label>
+				<input id="inputName" type="text" name="name" value="길동">
+			</div>
+			<div class="signup-el">
+				<label for="inputAddress">주소:</label>
+				<input id="inputAddress" type="text" name="address" value="서울">
+			</div>
+			<div class="signup-el">
+				<label for="inputAddressDetail">주소상세:</label>
+				<input id="inputAddressDetail" type="text" name="addressDetail" value="종로">
+			</div>
+		
+			<div class="signup-el">
+				<label for="selectGrade">등급:</label>
+				<select id="selectGrade" size="1" name="grade">
+					<option value="0">총관리자(0)</option>
+					<option value="1">관리자(1)</option>
+					<option value="2">판매자(2)</option>
+					<option value="3" selected>소비자(3)</option>
+					<option value="4">탈퇴(4)</option>
+				</select>
+			</div>
+			<div class="signup-el">
+				<label for="inputBirth">생일:</label>
+				<input id="inputBirth" type="date" name="birth" value="1900-01-01" pattern="yyyy-mm-dd">
+			</div>
+			<!-- 아래두 좀 변경 -->
+			<div class="btn-group">
+				<button class="btn-anime btn1" type="submit">회원가입</button>
+				<button class="btn-anime btn2" type="reset">초기화</button>
+				<button class="btn-anime btn2" type="button" onclick="history.back()">뒤로가기</button>
+			</div>
+		</form>
+	</main>
+</body>
+
+</html>

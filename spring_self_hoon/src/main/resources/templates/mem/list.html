@@ -1,0 +1,47 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	
+	<body>
+		<header th:insert="header_nav.html"></header>
+		<!-- request.getAttribute("test") -->
+		<h1>멤버 리스트</h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>pw</th>
+					<th>phone</th>
+					<th>email</th>
+					<th>name</th>
+					<th>address</th>
+					<th>address_detail</th>
+					<th>signup_time</th>
+					<th>birth</th>
+					<th>grade</th>
+					<!-- <th>itemBasket(list)</th> -->
+					<th>장바구니 수</th>
+					<th>장바구니 아이템 수</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="mem:${memList}">
+					<td th:text="${mem.id}"></td>
+					<td th:text="${mem.pw}"></td>
+					<td th:text="${mem.phone}"></td>					
+					<td th:text="${mem.email}"></td>
+					<td th:text="${mem.name}"></td>
+					<td th:text="${mem.address}"></td>
+					<td th:text="${mem.addressDetail}"></td>
+					<td th:text="${mem.signupTime}"></td>
+					<td th:text="${mem.birth}"></td>
+					<td th:text="${mem.grade}"></td>
+					<!-- <td th:text="${mem.itemBasket}"></td> -->
+					<td th:text="${mem.basketCount}"></td>
+					<td th:text="${mem.basketCountSum}"></td>
+				</tr>		
+			</tbody>
+		</table>
+	</body>
+</html>

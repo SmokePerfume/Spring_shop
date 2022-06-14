@@ -1,0 +1,74 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	
+	<body>
+		<!-- jsp@include file="haeder_nav.html" -->
+		<header th:insert="header_nav.html"></header>
+		<!-- request.getAttribute("test") -->
+		<h1>장바구니 리스트</h1>
+		<!-- <div th:text=${basketList}></div> -->
+		<table class="table">
+			<thead>
+				<tr>
+					<th>item_num </th>    
+					<th>name </th>        
+					<th>title </th>       
+					<th>count </th>       
+					<th>price</th>       
+					<th>member_id(mem.name)</th> 
+					<th>cate_name(cate.cate_num)(sub)</th>
+					<th>basket.count(수정)</th> 
+					<th>삭제</th> 
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="basket:${basketList}">
+					<td th:text="${basket.itemNum}"></td>
+					<td th:text="${basket.item.name}"></td>
+					<td th:text="${basket.item.title}"></td>
+					<td th:text="${basket.item.count}"></td>
+					<td th:text="${basket.item.price}"></td>
+					<td>
+ 						(<span th:text="${basket.item.member?.id}"></span>)
+ 						<span th:text="${basket.item.member?.name}"></span>
+ 					</td>
+ 					<td>
+ 						(<span th:text="${basket.item.category?.name}"></span>)
+ 						<span th:text="${basket.item.category?.cateNum}"></span>
+ 					<td>
+						<form action="/itemBasket/update.do" method="post">
+							<input type="hidden" name="basketNum" th:value="${basket.basketNum}">
+							<input type="hidden" name="memberId" th:value="${basket.memberId}">
+							<input type="hidden" name="itemNum" th:value="${basket.itemNum}">
+
+
+							<div class="input-group">
+							  <select class="form-select" name="count">
+							  	<th:block th:each="count:${#numbers.sequence(basket.count+10,1)}">
+							    	<option  th:selected="(${count}==${basket.count})" th:value="${count}" th:text="${count}"></option>
+							  	</th:block>
+							    	
+							  </select>
+							  <button class="btn btn-outline-info">추가</button>
+
+							</div>
+						</form>
+					</td>
+					<td>
+ 						<form action="/itemBasket/delete.do" method="post">
+
+							<div class="input-group mb-3">
+							  <div class="input-group-text">
+							    <input class="form-check-input mt-0" type="checkbox" name="basketNum" th:value="${basket.basketNum}">
+							  </div>
+							  <button class="form-control btn btn-outline-danger">삭제</button>
+							</div>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>			
+	</body>
+</html>

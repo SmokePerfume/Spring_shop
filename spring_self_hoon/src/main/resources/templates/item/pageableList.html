@@ -1,0 +1,106 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	
+	<body>
+		<!-- jsp@include file="haeder_nav.html" -->
+		<header th:insert="header_nav.html"></header>
+		<!-- request.getAttribute("test") -->
+		<h1>아이템리스트(pageable)</h1>
+		<form action="/item/list/1">
+			<div class="input-group">
+			  <select name="sort" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+			    <option selected>정렬할 칼럼</option>
+			    <option value="itemNum">itemNum</option>
+			    <option value="name">name</option>
+			    <option value="title">title</option>
+			    <option value="price">price</option>
+
+			  </select>
+	
+			  <select name="desc" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+			    <option selected>정렬순서</option>
+	
+			    <option value="desc">큰거부터(desc)</option>
+			    <option value="asc">작은거부터(asc)</option>
+			  </select >
+			  <button class="btn btn-outline-primary" type="submit">Button</button>
+			</div>
+		</form>
+		<table class="table">
+			<thead>
+				<tr>	
+					<th>img</th>
+					<th>item_num </th>    
+					<th>name </th>        
+					<th>title </th>       
+					<th>count </th>       
+					<th>price</th>        
+					<!-- <th>color</th>        
+					<th>main_img</th>     
+					<th>detail_img</th>   
+					<th>model_num</th> -->    
+					<th>mem.id(name)</th>    
+					<!-- <th>post_time</th>    
+					<th>sale_time</th>    
+					<th>sale_end_time</th>
+					<th>state</th> -->        
+					<th>cate_num(name) </th>    
+					<th>장바구니 </th>   
+					<!-- <th>item_commnet </th> -->   
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item:${itemList}">
+					<td>
+						<img th:src="@{/public/img/thubm/{img}(img=${item.mainImg})}">
+					</td>
+					<td th:text="${item.itemNum}"></td>
+					<td th:text="${item.name}"></td>
+					<td th:text="${item.title}"></td>
+					<td th:text="${item.count}"></td>
+					<td th:text="${item.price}"></td>
+					<td>
+ 						<span th:text="${item.member?.id}"></span>
+ 						(<span th:text="${item.member?.name}"></span>)
+ 					</td>
+					<td>
+ 						<span th:text="${item.category?.cateNum}"></span>
+ 						(<span th:text="${item.category?.name}"></span>)
+ 					</td>
+ 					<td>
+ 						<form action="/itemBasket/insert.do" method="POST">
+ 							<input type="hidden" name="itemNum" th:value="${item.itemNum}">
+							<div class="input-group">
+								<select class="form-select" name="count">
+									<option selected value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+								</select>
+								<button class="btn btn-outline-primary" type="submit">추가</button>
+							</div>
+ 						</form>
+ 					</td>
+ 					<!-- <td th:text="${item.itemComment}">
+ 					</td> -->
+				</tr>
+			</tbody>
+		</table>	
+		<p>
+			totalPage: <strong th:text="${itemList.totalPages}"></strong>
+			newPage: <strong th:text="${itemList.number+1}"></strong>
+			hasNext: <strong th:text="${itemList.hasNext}"></strong>
+			hasPrev: <strong th:text="${itemList.hasPrevious}"></strong>
+		</p>
+		<!-- pageStart pageEnd pageNow -->
+		<div th:with="totalPages=${itemList.totalPages}, nowPage=${itemList.number+1}, 
+						hasNext=${itemList.hasNext}, hasPrev=${itemList.hasPrevious},
+						startPage=${((nowPage-2)<=0)?1:nowPage-2},
+						endPage=${((nowPage+2)>=totalPages)?totalPages:nowPage+2}">
+			<nav th:insert="/pagination.html"></nav>
+		</div>	
+				
+	</body>
+</html>

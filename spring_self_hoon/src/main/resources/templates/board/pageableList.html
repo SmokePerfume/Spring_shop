@@ -1,0 +1,76 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+	</head>
+<!-- 
++-----------+--------------+------+-----+-------------------+-------------------+
+| Field     | Type         | Null | Key | Default           | Extra             |
++-----------+--------------+------+-----+-------------------+-------------------+
+| num       | int          | NO   | PRI | NULL              | auto_increment    |
+| member_id | varchar(255) | NO   | MUL | NULL              |                   |
+| title     | varchar(255) | NO   |     | NULL              |                   |
+| contents  | varchar(255) | YES  |     |                   |                   |
+| post_time | datetime     | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
+| state     | tinyint      | NO   |     | 0                 |                   |
++-----------+--------------+------+-----+-------------------+-------------------+ 
+-->
+	<body>
+		<header th:insert="header_nav.html"></header>
+		<!-- request.getAttribute("test") -->
+		<h1>게시판 리스트 PageableList</h1>
+		<form action="/board/list/1">
+			<div class="input-group">
+			  <select name="sort" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+			    <option selected>정렬할 칼럼</option>
+			    <option value="num">num</option>
+			    <option value="memberId">member_id</option>
+			    <option value="title">title</option>
+			    <option value="contents">contents</option>
+			    <option value="postTime">post_time</option>
+			    <option value="state">state</option>
+			  </select>
+			  <select name="desc" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+			    <option selected>정렬순서</option>
+			    <option value="desc">큰거부터(desc)</option>
+			    <option value="asc">작은거부터(asc)</option>
+			  </select >
+			  <button class="btn btn-outline-primary" type="submit">Button</button>
+			</div>
+		</form>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>num</th>
+					<th>member_id</th>
+					<th>title</th>
+					<th>contents</th>
+					<th>post_time</th>
+					<th>state</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="board:${boardList}">
+					<td th:text="${board.num}"></td>
+					<td th:text="${board.memberId}"></td>
+					<td th:text="${board.title}"></td>					
+					<td th:text="${board.contents}"></td>
+					<td th:text="${board.postTime}"></td>
+					<td th:text="${board.state}"></td>
+				</tr>		
+			</tbody>
+		</table>
+		<p>
+			totalPage: <strong th:text="${boardList.totalPages}"></strong>
+			newPage: <strong th:text="${boardList.number+1}"></strong>
+			hasNext: <strong th:text="${boardList.hasNext}"></strong>
+			hasPrev: <strong th:text="${boardList.hasPrevious}"></strong>
+		</p>
+		pageStart pageEnd pageNow
+		<div th:with="totalPages=${boardList.totalPages}, nowPage=${boardList.number+1}, 
+						hasNext=${boardList.hasNext}, hasPrev=${boardList.hasPrevious},
+						startPage=${((nowPage-2)<=0)?1:nowPage-2},
+						endPage=${((nowPage+2)>=totalPages)?totalPages:nowPage+2}">
+			<nav th:insert="/pagination.html"></nav>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,82 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	
+	<body>
+		<!-- jsp@include file="haeder_nav.html" -->
+		<header th:insert="header_nav.html"></header>
+		<!-- request.getAttribute("test") -->
+		<h1>멤버리스트 pageableList</h1>
+		<form action="/mem/list/1">
+			<div class="input-group">
+			  <select name="sort" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+			    <option selected>정렬할 칼럼</option>
+			    <option value="id">id</option>
+			    <option value="name">name</option>
+			    <option value="phone">phone</option>
+			    <option value="email">email</option>
+			    <option value="address">address</option>
+			    <option value="addressDetail">address_detail</option>
+			    <option value="signupTime">signup_time</option>
+			    <option value="birth">birth</option>
+			    <option value="grade">grade</option>
+
+
+			  </select>
+	
+			  <select name="desc" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+			    <option selected>정렬순서</option>
+	
+			    <option value="desc">큰거부터(desc)</option>
+			    <option value="asc">작은거부터(asc)</option>
+			  </select >
+			  <button class="btn btn-outline-primary" type="submit">Button</button>
+			</div>
+		</form>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>pw</th>
+					<th>phone</th>
+					<th>email</th>
+					<th>name</th>
+					<th>address</th>
+					<th>address_detail</th>
+					<th>signup_time</th>
+					<th>birth</th>
+					<th>grade</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="mem:${memList}">
+					<td th:text="${mem.id}"></td>
+					<td th:text="${mem.pw}"></td>
+					<td th:text="${mem.phone}"></td>					
+					<td th:text="${mem.email}"></td>
+					<td th:text="${mem.name}"></td>
+					<td th:text="${mem.address}"></td>
+					<td th:text="${mem.addressDetail}"></td>
+					<td th:text="${mem.signupTime}"></td>
+					<td th:text="${mem.birth}"></td>
+					<td th:text="${mem.grade}"></td>
+				</tr>
+				
+			</tbody>
+		</table>	
+		<p>
+			totalPage: <strong th:text="${memList.totalPages}"></strong>
+			newPage: <strong th:text="${memList.number+1}"></strong>
+			hasNext: <strong th:text="${memList.hasNext}"></strong>
+			hasPrev: <strong th:text="${memList.hasPrevious}"></strong>
+		</p>
+		<!-- pageStart pageEnd pageNow -->
+		<div th:with="totalPages=${memList.totalPages}, nowPage=${memList.number+1}, 
+						hasNext=${memList.hasNext}, hasPrev=${memList.hasPrevious},
+						startPage=${((nowPage-2)<=0)?1:nowPage-2},
+						endPage=${((nowPage+2)>=totalPages)?totalPages:nowPage+2}">
+			<nav th:insert="/pagination.html"></nav>
+		</div>	
+	</body>
+</html>
