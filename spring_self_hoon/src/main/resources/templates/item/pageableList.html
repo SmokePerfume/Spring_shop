@@ -2,32 +2,59 @@
 	<head>
 		<meta charset="UTF-8">
 	</head>
-	
+<style>
+#memDivHeader{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: baseline;
+    height: 50px;
+}
+.memHeaderEl{
+	display:flex; 
+}
+th, td {
+   vertical-align:middle;
+}
+</style>
 	<body>
 		<!-- jsp@include file="haeder_nav.html" -->
 		<header th:insert="header_nav.html"></header>
 		<!-- request.getAttribute("test") -->
 		<h1>아이템리스트(pageable)</h1>
-		<form action="/item/list/1">
-			<div class="input-group">
-			  <select name="sort" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-			    <option selected>정렬할 칼럼</option>
-			    <option value="itemNum">itemNum</option>
-			    <option value="name">name</option>
-			    <option value="title">title</option>
-			    <option value="price">price</option>
-
-			  </select>
-	
-			  <select name="desc" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-			    <option selected>정렬순서</option>
-	
-			    <option value="desc">큰거부터(desc)</option>
-			    <option value="asc">작은거부터(asc)</option>
-			  </select >
-			  <button class="btn btn-outline-primary" type="submit">Button</button>
+		<div id="memDivHeader" class="container-fluid">
+			<div class="memHeaderEl">
+				<form action="/item/list/1">
+					<div class="input-group">
+					  <select name="sort" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+					    <option selected>정렬할 칼럼</option>
+					    <option value="itemNum">itemNum</option>
+					    <option value="name">name</option>
+					    <option value="title">title</option>
+					    <option value="price">price</option>
+		
+					  </select>
+			
+					  <select name="desc" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+					    <option selected>정렬순서</option>
+			
+					    <option value="desc">큰거부터(desc)</option>
+					    <option value="asc">작은거부터(asc)</option>
+					  </select >
+					  <button class="btn btn-outline-primary" type="submit">Button</button>
+					</div>
+				</form>
 			</div>
-		</form>
+			<div class="memHeaderEl">
+					<button type="button" onclick="location.href='../seller/insert.do'" class="btn btn-outline-dark navbar-brand">아이템 등록</button>	
+			</div>
+			<div class="memHeaderEl">
+		    	<form class="d-flex">
+		      		<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+		      		<button class="btn btn-outline-success" type="submit"> Search</button>
+		    	</form>		    
+	    	</div>	
+		</div>
 		<table class="table">
 			<thead>
 				<tr>	
@@ -48,6 +75,7 @@
 					<th>state</th> -->        
 					<th>cate_num(name) </th>    
 					<th>장바구니 </th>   
+					<th>삭제 </th>   
 					<!-- <th>item_commnet </th> -->   
 				</tr>
 			</thead>
@@ -83,6 +111,14 @@
 							</div>
  						</form>
  					</td>
+ 					<td>
+ 						<form action="/item/seller/delete.do" method="post">
+							<div class="input-group mb-3">
+							  <input type="hidden" name="itemNum" th:value="${item.itemNum}">
+							  <button class="form-control btn btn-outline-danger">삭제</button>
+							</div>
+						</form>
+					</td>
  					<!-- <td th:text="${item.itemComment}">
  					</td> -->
 				</tr>

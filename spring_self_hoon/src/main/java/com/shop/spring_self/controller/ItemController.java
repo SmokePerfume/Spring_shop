@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.spring_self.repository.ItemRepository;
+import com.shop.spring_self.vo.ItemBasketVo;
 import com.shop.spring_self.vo.ItemVo;
 
 
@@ -121,6 +122,12 @@ public class ItemController {
 			return "redirect:/item/seller/insert.do";
 		}
 		
+	}
+	
+	@PostMapping("/seller/delete.do")
+	public String delete(ItemVo itemVo) {
+		ir.delete(itemVo);
+		return "redirect:/item/list/1";
 	}
 	
 }

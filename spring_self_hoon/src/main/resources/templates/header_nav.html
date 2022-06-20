@@ -48,12 +48,12 @@
 							</a>
 						</li>
 						<li th:if="${(session.memVo?.grade<2)&&session.memVo!=null}" class="nav-item" >
-							<a class=nav-link href="/board/list/1" >
+							<a class=nav-link href="#" >
 								관리자만의 탭
 							</a>
 						</li>		
 						<li th:if="${(session.memVo?.grade>=2)&&session.memVo!=null}" class="nav-item" >
-							<a class=nav-link href="/board/list/1" >
+							<a class=nav-link href="#" >
 								사용자만의 탭
 							</a>
 						</li>	  
